@@ -16,7 +16,7 @@ all: $(NAME)
 # Construction de l'exécutable en respectant les dépendances
 $(NAME): $(OBJ) $(LIBFT)
 	@echo "Compiling libraries..."
-	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
 	@echo "libraries compiled successfully!"
 
 # Compilation des bibliothèques externes
@@ -25,7 +25,7 @@ $(LIBFT):
 
 # Compilation des fichiers objets
 %.o: %.c
-	@$(CC) $(CFLAGS) $(DEBUG_FLAGS) -I$(LIBFT_PATH) -c $< -o $@
+	@$(CC) $(CFLAGS) $(DEBUG_FLAGS) -I$(LIBFT_PATH) -I/usr/include -Imlx_linux -c $< -o $@
 
 # Nettoyage des fichiers objets
 clean:
