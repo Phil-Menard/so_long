@@ -12,7 +12,8 @@ LIBFT_PATH = libft
 SRC = so_long.c \
 	utils.c \
 	map.c \
-	player.c
+	player.c \
+	init_and_close.c
 
 # Ajout des préfixes de dossiers
 SRC := $(addprefix $(SRC_DIR)/, $(SRC))

@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 18:44:34 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/03 23:31:20 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/03 23:57:50 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	render_map(t_game *game)
 	int	x;
 
 	game->total_coins = 0;
+	game->move_count = 0;
 	y = 0;
 	while (y < game->map.rows)
 	{

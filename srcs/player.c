@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 23:12:12 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/03 23:39:55 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/03 23:59:28 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,31 @@ void	update_player_pos(t_game *game, int x, int y)
 
 void	move_player(t_game *game, int x, int y)
 {
-	ft_printf("nb coins : %d\n", game->total_coins);
-	mlx_put_image_to_window(game->mlx, game->window, game->floor.img,
-		game->player.pos_x * IMG_HEIGHT, game->player.pos_y * IMG_WIDTH);
-	if (game->map.full_map[y][x] == COIN)
+	if (game->map.full_map[y][x] != EXIT)
 	{
-		--game->total_coins;
-		game->map.full_map[y][x] = FLOOR;
+		mlx_put_image_to_window(game->mlx, game->window, game->floor.img,
+			game->player.pos_x * IMG_HEIGHT, game->player.pos_y * IMG_WIDTH);
+		if (game->map.full_map[y][x] == COIN)
+		{
+			--game->total_coins;
+			game->map.full_map[y][x] = FLOOR;
+		}
+		update_player_pos(game, x, y);
+		mlx_put_image_to_window(game->mlx, game->window, game->player.img,
+			game->player.pos_x * IMG_HEIGHT, game->player.pos_y * IMG_WIDTH);
+		++game->move_count;
 	}
-	ft_printf("nb coins : %d\n", game->total_coins);
-	update_player_pos(game, x, y);
-	mlx_put_image_to_window(game->mlx, game->window, game->player.img,
-		game->player.pos_x * IMG_HEIGHT, game->player.pos_y * IMG_WIDTH);
+	else if (game->map.full_map[y][x] == EXIT && game->total_coins == 0)
+	{
+		mlx_put_image_to_window(game->mlx, game->window, game->floor.img,
+			game->player.pos_x * IMG_HEIGHT, game->player.pos_y * IMG_WIDTH);
+		update_player_pos(game, x, y);
+		mlx_put_image_to_window(game->mlx, game->window, game->player.img,
+			game->player.pos_x * IMG_HEIGHT, game->player.pos_y * IMG_WIDTH);
+		end_game(game);
+		++game->move_count;
+	}
+	ft_printf("Mouvements : %d\n", game->move_count);
 }
 
 int	handle_input(int keysym, t_game *game)

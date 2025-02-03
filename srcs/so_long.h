@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 17:25:00 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/03 23:38:38 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/03 23:57:27 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_game
 	void		*mlx;
 	void		*window;
 	int			total_coins;
+	int			move_count;
 	t_sprite	player;
 	t_sprite	wall;
 	t_sprite	floor;
@@ -73,9 +74,13 @@ typedef struct s_game
 
 void	get_map(t_map *map);
 int		render_map(t_game *game);
+int		handle_input(int keysym, t_game *game);
+void	end_game(t_game *game);
+int		destroy_all(int keysym, t_game *game);
+void	init_game(t_game *game);
+void	init_sprites(t_game *game);
 void	update_player_pos(t_game *game, int x, int y);
 void	move_player(t_game *game, int x, int y);
-int		handle_input(int keysym, t_game *game);
 char	*ft_stradd(char *s1, char *s2);
 
 #endif
