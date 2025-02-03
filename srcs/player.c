@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 23:12:12 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/03 23:18:29 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/03 23:39:55 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,15 @@ void	update_player_pos(t_game *game, int x, int y)
 
 void	move_player(t_game *game, int x, int y)
 {
+	ft_printf("nb coins : %d\n", game->total_coins);
 	mlx_put_image_to_window(game->mlx, game->window, game->floor.img,
 		game->player.pos_x * IMG_HEIGHT, game->player.pos_y * IMG_WIDTH);
+	if (game->map.full_map[y][x] == COIN)
+	{
+		--game->total_coins;
+		game->map.full_map[y][x] = FLOOR;
+	}
+	ft_printf("nb coins : %d\n", game->total_coins);
 	update_player_pos(game, x, y);
 	mlx_put_image_to_window(game->mlx, game->window, game->player.img,
 		game->player.pos_x * IMG_HEIGHT, game->player.pos_y * IMG_WIDTH);

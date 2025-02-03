@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 17:25:00 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/03 23:12:58 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/03 23:38:38 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_game
 {
 	void		*mlx;
 	void		*window;
+	int			total_coins;
 	t_sprite	player;
 	t_sprite	wall;
 	t_sprite	floor;
