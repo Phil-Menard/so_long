@@ -48,6 +48,7 @@ SRC = ft_isalpha.c \
 	ft_putline.c \
 	ft_putstr.c \
 	ft_realloc.c \
+	ft_free_2d.c \
 	get_next_line.c
 
 BONUS_SRC = ft_lstnew_bonus.c \
