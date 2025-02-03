@@ -10,7 +10,8 @@ LIBFT_PATH = libft
 
 # Fichiers sources
 SRC = so_long.c \
-	utils.c
+	utils.c \
+	map.c
 
 # Ajout des préfixes de dossiers
 SRC := $(addprefix $(SRC_DIR)/, $(SRC))

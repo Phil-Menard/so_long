@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 17:25:00 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/03 18:03:51 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/03 20:06:45 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,6 @@
 # define IMG_HEIGHT			64
 # define IMG_WIDTH			64
 
-# define WALL				'1'
-# define FLOOR 				'0'
-# define COINS 				'C'
-# define PLAYER				'P'
-# define MAP_EXIT 		 	'E'
-
 # define KEY_W				119
 # define KEY_A				97
 # define KEY_S				115
@@ -35,6 +29,19 @@
 # define KEY_LEFT 			65361
 # define KEY_RIGHT 			65363
 # define KEY_DOWN 			65364
+# define KEY_ESC 			65307
+
+# define WALL_PATH			"./assets/sprites/wall.xpm"
+# define FLOOR_PATH			"./assets/sprites/floor.xpm"
+# define COIN_PATH			"./assets/sprites/coin.xpm"
+# define PLAYER_PATH		"./assets/sprites/player.xpm"
+# define EXIT_PATH			"./assets/sprites/exit.xpm"
+
+# define WALL				'1'
+# define FLOOR 				'0'
+# define COIN 				'C'
+# define PLAYER				'P'
+# define EXIT 		 		'E'
 
 typedef struct s_map
 {
@@ -43,11 +50,13 @@ typedef struct s_map
 	int		columns;
 }	t_map;
 
-typedef struct s_player
+typedef struct s_sprite
 {
+	void	*img;
+	char	*path;
 	int		pos_x;
 	int		pos_y;
-}	t_player;
+}	t_sprite;
 
 typedef struct s_game
 {
@@ -57,10 +66,16 @@ typedef struct s_game
 	char		*path;
 	int			width;
 	int			height;
-	t_player	player;
+	t_sprite	player;
+	t_sprite	wall;
+	t_sprite	floor;
+	t_sprite	coin;
+	t_sprite	exit;
 	t_map		map;
 }	t_game;
 
+void	get_map(t_map *map);
+int		render_map(t_game *game);
 char	*ft_stradd(char *s1, char *s2);
 
 #endif

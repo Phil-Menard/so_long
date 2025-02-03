@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 15:15:27 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/03 18:40:33 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/03 20:45:23 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,10 @@ int	render(t_game *game)
 {
 	if (game->window == NULL)
 		return (1);
-	mlx_clear_window(game->mlx, game->window);
-	mlx_put_image_to_window(game->mlx, game->window, game->img,
-		game->player.pos_x, game->player.pos_y);
 	return (0);
 }
 
-int	handle_input(int keysym, t_player *player)
+int	handle_input(int keysym, t_sprite *player)
 {
 	if (keysym == KEY_W || keysym == KEY_UP)
 		player->pos_y -= 32;
@@ -37,10 +34,14 @@ int	handle_input(int keysym, t_player *player)
 
 int	destroy_all(int keysym, t_game *game)
 {
-	if (keysym == XK_Escape)
+	if (keysym == KEY_ESC)
 	{
 		mlx_destroy_window(game->mlx, game->window);
-		mlx_destroy_image(game->mlx, game->img);
+		mlx_destroy_image(game->mlx, game->player.img);
+		mlx_destroy_image(game->mlx, game->wall.img);
+		mlx_destroy_image(game->mlx, game->floor.img);
+		mlx_destroy_image(game->mlx, game->coin.img);
+		mlx_destroy_image(game->mlx, game->exit.img);
 		mlx_destroy_display(game->mlx);
 		free(game->mlx);
 		ft_free_2d((void **)game->map.full_map);
@@ -61,48 +62,39 @@ void	init_game(t_game *game)
 		free(game->window);
 		exit(EXIT_FAILURE);
 	}
-	game->path = "./assets/sprites/player.xpm";
-	game->player.pos_x = 64;
-	game->player.pos_y = 64;
 }
 
-void	fill_map(t_map *map)
+t_sprite	new_sprite(t_game *game, char *path)
 {
-	int		map_fd;
-	char	*file_content;
-	char	*temp_map;
+	t_sprite	sprite;
 
-	temp_map = NULL;
-	map_fd = open("./assets/maps/basic.ber", O_RDONLY);
-	if (map_fd == -1)
-		return (perror("open"), exit(EXIT_FAILURE));
-	map->rows = 0;
-	file_content = get_next_line(map_fd);
-	while (file_content != NULL)
-	{
-		temp_map = ft_stradd(temp_map, file_content);
-		map->rows++;
-		free(file_content);
-		file_content = get_next_line(map_fd);
-	}
-	map->full_map = ft_split(temp_map, '\n');
-	map->columns = ft_strlen(map->full_map[0]);
-	free(temp_map);
-	free(file_content);
-	close(map_fd);
+	sprite.img = mlx_xpm_file_to_image(game->mlx, path, &sprite.pos_x,
+			&sprite.pos_y);
+	if (!sprite.img)
+		ft_printf("Sprite not found.\n");
+	return (sprite);
+}
+
+void	init_sprites(t_game *game)
+{
+	game->wall = new_sprite(game, WALL_PATH);
+	game->floor = new_sprite(game, FLOOR_PATH);
+	game->coin = new_sprite(game, COIN_PATH);
+	game->player = new_sprite(game, PLAYER_PATH);
+	game->exit = new_sprite(game, EXIT_PATH);
 }
 
 int	main(void)
 {
 	t_game	game;
 
-	fill_map(&game.map);
+	get_map(&game.map);
 	init_game(&game);
-	game.img = mlx_xpm_file_to_image(game.mlx, game.path,
-			&game.width, &game.height);
+	init_sprites(&game);
+	render_map(&game);
 	mlx_hook(game.window, KeyRelease, KeyReleaseMask, &handle_input,
-			&game.player);
-	mlx_loop_hook(game.mlx, &render, &game);
+		&game.player);
+	mlx_loop_hook(game.mlx, &render_map, &game);
 	mlx_hook(game.window, KeyPress, KeyPressMask, &destroy_all, &game);
 	mlx_loop(game.mlx);
 }
