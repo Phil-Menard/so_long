@@ -6,31 +6,11 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 15:15:27 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/03 20:45:23 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/03 23:18:44 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-int	render(t_game *game)
-{
-	if (game->window == NULL)
-		return (1);
-	return (0);
-}
-
-int	handle_input(int keysym, t_sprite *player)
-{
-	if (keysym == KEY_W || keysym == KEY_UP)
-		player->pos_y -= 32;
-	else if (keysym == KEY_S || keysym == KEY_DOWN)
-		player->pos_y += 32;
-	else if (keysym == KEY_A || keysym == KEY_LEFT)
-		player->pos_x -= 32;
-	else if (keysym == KEY_D || keysym == KEY_RIGHT)
-		player->pos_x += 32;
-	return (0);
-}
 
 int	destroy_all(int keysym, t_game *game)
 {
@@ -92,9 +72,9 @@ int	main(void)
 	init_game(&game);
 	init_sprites(&game);
 	render_map(&game);
-	mlx_hook(game.window, KeyRelease, KeyReleaseMask, &handle_input,
-		&game.player);
-	mlx_loop_hook(game.mlx, &render_map, &game);
+	mlx_hook(game.window, KeyRelease, KeyReleaseMask, &handle_input, &game);
 	mlx_hook(game.window, KeyPress, KeyPressMask, &destroy_all, &game);
 	mlx_loop(game.mlx);
 }
+
+//mlx_loop_hook(game.mlx, &render_map, &game);

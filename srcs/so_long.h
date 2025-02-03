@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 17:25:00 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/03 20:06:45 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/03 23:12:58 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,6 @@ typedef struct s_game
 {
 	void		*mlx;
 	void		*window;
-	void		*img;
-	char		*path;
-	int			width;
-	int			height;
 	t_sprite	player;
 	t_sprite	wall;
 	t_sprite	floor;
@@ -76,6 +72,9 @@ typedef struct s_game
 
 void	get_map(t_map *map);
 int		render_map(t_game *game);
+void	update_player_pos(t_game *game, int x, int y);
+void	move_player(t_game *game, int x, int y);
+int		handle_input(int keysym, t_game *game);
 char	*ft_stradd(char *s1, char *s2);
 
 #endif

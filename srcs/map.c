@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 18:44:34 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/03 20:48:14 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/03 21:38:25 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,23 @@ void	fill_map(t_game *game, int y, int x)
 	pos = game->map.full_map[y][x];
 	if (pos == WALL)
 		mlx_put_image_to_window(game->mlx, game->window, game->wall.img,
-			game->wall.pos_x * x, game->wall.pos_y * y);
+			IMG_HEIGHT * x, IMG_WIDTH * y);
 	else if (pos == FLOOR)
 		mlx_put_image_to_window(game->mlx, game->window, game->floor.img,
-			game->floor.pos_x * x, game->floor.pos_y * y);
+			IMG_HEIGHT * x, IMG_WIDTH * y);
 	else if (pos == COIN)
 		mlx_put_image_to_window(game->mlx, game->window, game->coin.img,
-			game->coin.pos_x * x, game->coin.pos_y * y);
+			IMG_HEIGHT * x, IMG_WIDTH * y);
 	else if (pos == PLAYER)
+	{
 		mlx_put_image_to_window(game->mlx, game->window, game->player.img,
-			game->player.pos_x * x, game->player.pos_y * y);
+			IMG_HEIGHT * x, IMG_WIDTH * y);
+		game->player.pos_x = x;
+		game->player.pos_y = y;
+	}
 	else if (pos == EXIT)
 		mlx_put_image_to_window(game->mlx, game->window, game->exit.img,
-			game->exit.pos_x * x, game->exit.pos_y * y);
+			IMG_HEIGHT * x, IMG_WIDTH * y);
 }
 
 int	render_map(t_game *game)
