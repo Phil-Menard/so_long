@@ -6,12 +6,16 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 11:35:59 by pmenard           #+#    #+#             */
-/*   Updated: 2025/01/30 15:13:30 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/03 17:57:35 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 100
+# endif
 
 # include <stddef.h>
 # include <stdarg.h>
@@ -58,6 +62,11 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
+char	*get_next_line(int fd);
+int		ft_strfindchar(char *src, int c);
+char	*ft_stricpy(char *src, char *dest, int i);
+char	*ft_putline(char *src, char *dest);
+char	*ft_realloc(char *str, char *buffer);
 t_list	*ft_lstnew(void *content);
 void	ft_lstadd_front(t_list **lst, t_list *new);
 int		ft_lstsize(t_list *lst);
@@ -75,5 +84,6 @@ void	ft_putnum(int nb, int *result);
 void	ft_put_unum(unsigned int nb, int *result);
 void	ft_puthex(unsigned int x, int *result, char c);
 size_t	len_unint(unsigned int n);
+void	ft_free_2d(void **arr);
 
 #endif
