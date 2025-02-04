@@ -6,13 +6,13 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 23:52:42 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/03 23:53:37 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/04 13:56:00 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	end_game(t_game *game)
+int	end_game(t_game *game)
 {
 	mlx_destroy_window(game->mlx, game->window);
 	mlx_destroy_image(game->mlx, game->player.img);
@@ -24,6 +24,7 @@ void	end_game(t_game *game)
 	free(game->mlx);
 	ft_free_2d((void **)game->map.full_map);
 	exit(EXIT_SUCCESS);
+	return (0);
 }
 
 int	destroy_all(int keysym, t_game *game)

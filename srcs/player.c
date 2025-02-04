@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 23:12:12 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/03 23:59:28 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/04 14:23:45 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ void	update_player_pos(t_game *game, int x, int y)
 
 void	move_player(t_game *game, int x, int y)
 {
+	if (game->map.full_map[y][x] != EXIT
+		|| (game->map.full_map[y][x] == EXIT && game->total_coins == 0))
+		ft_printf("Mouvements : %d\n", ++game->move_count);
 	if (game->map.full_map[y][x] != EXIT)
 	{
 		mlx_put_image_to_window(game->mlx, game->window, game->floor.img,
@@ -38,7 +41,6 @@ void	move_player(t_game *game, int x, int y)
 		update_player_pos(game, x, y);
 		mlx_put_image_to_window(game->mlx, game->window, game->player.img,
 			game->player.pos_x * IMG_HEIGHT, game->player.pos_y * IMG_WIDTH);
-		++game->move_count;
 	}
 	else if (game->map.full_map[y][x] == EXIT && game->total_coins == 0)
 	{
@@ -48,9 +50,7 @@ void	move_player(t_game *game, int x, int y)
 		mlx_put_image_to_window(game->mlx, game->window, game->player.img,
 			game->player.pos_x * IMG_HEIGHT, game->player.pos_y * IMG_WIDTH);
 		end_game(game);
-		++game->move_count;
 	}
-	ft_printf("Mouvements : %d\n", game->move_count);
 }
 
 int	handle_input(int keysym, t_game *game)

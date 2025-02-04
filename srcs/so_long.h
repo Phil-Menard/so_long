@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 17:25:00 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/03 23:57:27 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/04 13:56:24 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ typedef struct s_game
 void	get_map(t_map *map);
 int		render_map(t_game *game);
 int		handle_input(int keysym, t_game *game);
-void	end_game(t_game *game);
+int		end_game(t_game *game);
 int		destroy_all(int keysym, t_game *game);
 void	init_game(t_game *game);
 void	init_sprites(t_game *game);
