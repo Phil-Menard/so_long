@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 18:44:34 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/05 17:57:21 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/05 22:31:49 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,33 @@ int	render_map(t_game *game)
 			- 32), ((game->map.rows + 1) * IMG_HEIGHT) - 32, 0xFFFFFF, str);
 	free(str);
 	return (0);
+}
+
+t_map	cpy_map(t_map map)
+{
+	t_map	res;
+	int		i;
+	int		j;
+
+	res.full_map = malloc((map.rows + 1) * sizeof (char *));
+	i = 0;
+	while (i < map.rows)
+	{
+		res.full_map[i] = ft_strdup(map.full_map[i]);
+		j = 0;
+		while (j < map.columns)
+		{
+			if (map.full_map[i][j] == PLAYER)
+			{
+				res.x = i;
+				res.y = j;
+			}
+			j++;
+		}
+		i++;
+	}
+	res.full_map[i] = NULL;
+	res.columns = map.columns;
+	res.rows = map.rows;
+	return (res);
 }

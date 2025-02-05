@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 23:52:42 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/05 16:25:30 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/05 22:33:59 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	end_game(t_game *game)
 	mlx_destroy_image(game->mlx, game->floor.img);
 	mlx_destroy_image(game->mlx, game->coin.img);
 	mlx_destroy_image(game->mlx, game->exit.img);
+	if (game->exit_open.img)
+		mlx_destroy_image(game->mlx, game->exit_open.img);
 	mlx_destroy_display(game->mlx);
 	free(game->mlx);
 	ft_free_2d((void **)game->map.full_map);
@@ -68,4 +70,5 @@ void	init_sprites(t_game *game)
 	game->coin = new_sprite(game, COIN_PATH);
 	game->player = new_sprite(game, PLAYER_PATH);
 	game->exit = new_sprite(game, EXIT_PATH);
+	game->exit_open.img = NULL;
 }

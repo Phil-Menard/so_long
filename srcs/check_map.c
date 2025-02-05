@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 14:49:58 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/05 16:13:31 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/05 22:39:25 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,35 +39,6 @@ int	surrounded_by_walls(t_game *game)
 		y++;
 	}
 	return (0);
-}
-
-t_map	cpy_map(t_map map)
-{
-	t_map	res;
-	int		i;
-	int		j;
-
-	res.full_map = malloc((map.rows + 1) * sizeof (char *));
-	i = 0;
-	while (i < map.rows)
-	{
-		res.full_map[i] = ft_strdup(map.full_map[i]);
-		j = 0;
-		while (j < map.columns)
-		{
-			if (map.full_map[i][j] == PLAYER)
-			{
-				res.x = i;
-				res.y = j;
-			}
-			j++;
-		}
-		i++;
-	}
-	res.full_map[i] = NULL;
-	res.columns = map.columns;
-	res.rows = map.rows;
-	return (res);
 }
 
 void	floodfill(int r, int c, t_map *map)
@@ -103,6 +74,35 @@ int	check_way(t_map *map)
 	return (0);
 }
 
+void	check_nb_player(t_game *game)
+{
+	int	i;
+	int	j;
+	int	counter;
+
+	i = 0;
+	counter = 0;
+	while (game->map.full_map[i])
+	{
+		j = 0;
+		while (j++ < game->map.columns)
+		{
+			if (game->map.full_map[i][j] == PLAYER)
+				counter++;
+		}
+		i++;
+	}
+	if (counter != 1)
+	{
+		if (counter == 0)
+			ft_printf("Error\nThere is no player!\n");
+		else if (counter > 1)
+			ft_printf("Error\nThere are too many players!\n");
+		ft_free_2d((void **)game->map.full_map);
+		exit(EXIT_FAILURE);
+	}
+}
+
 void	check_map(t_game *game)
 {
 	t_map	map_cpy;
@@ -119,6 +119,7 @@ void	check_map(t_game *game)
 		ft_free_2d((void **)game->map.full_map);
 		exit(EXIT_FAILURE);
 	}
+	check_nb_player(game);
 	map_cpy = cpy_map(game->map);
 	floodfill(map_cpy.x, map_cpy.y, &map_cpy);
 	if (check_way(&map_cpy) == 1)

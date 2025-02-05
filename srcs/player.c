@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 23:12:12 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/05 17:54:50 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/05 22:33:51 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,34 @@ void	update_move_window(t_game *game)
 	free(str);
 }
 
+void	coins_counter(t_game *game)
+{
+	int	i;
+	int	j;
+
+	--game->total_coins;
+	if (game->total_coins == 0)
+	{
+		i = 0;
+		while (i < game->map.rows)
+		{
+			j = 0;
+			while (j < game->map.columns)
+			{
+				if (game->map.full_map[i][j] == EXIT)
+				{
+					if (!game->exit_open.img)
+						game->exit_open = new_sprite(game, EXIT_OPEN_PATH);
+					mlx_put_image_to_window(game->mlx, game->window,
+						game->exit_open.img, IMG_HEIGHT * j, IMG_WIDTH * i);
+				}
+				j++;
+			}
+			i++;
+		}
+	}
+}
+
 void	move_player(t_game *game, int x, int y)
 {
 	if (game->map.full_map[y][x] != EXIT
@@ -54,7 +82,7 @@ void	move_player(t_game *game, int x, int y)
 			game->player.pos_x * IMG_HEIGHT, game->player.pos_y * IMG_WIDTH);
 		if (game->map.full_map[y][x] == COIN)
 		{
-			--game->total_coins;
+			coins_counter(game);
 			game->map.full_map[y][x] = FLOOR;
 		}
 		update_player_pos(game, x, y);

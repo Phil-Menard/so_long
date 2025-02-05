@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 17:25:00 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/05 15:04:38 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/05 22:32:02 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # define COIN_PATH			"./assets/sprites/coin.xpm"
 # define PLAYER_PATH		"./assets/sprites/player.xpm"
 # define EXIT_PATH			"./assets/sprites/exit.xpm"
+# define EXIT_OPEN_PATH		"./assets/sprites/exit_open.xpm"
 
 # define WALL				'1'
 # define FLOOR 				'0'
@@ -71,19 +72,22 @@ typedef struct s_game
 	t_sprite	floor;
 	t_sprite	coin;
 	t_sprite	exit;
+	t_sprite	exit_open;
 	t_map		map;
 }	t_game;
 
-void	get_map(t_game *game, char *argv);
-void	check_map(t_game *game);
-int		render_map(t_game *game);
-int		handle_input(int keysym, t_game *game);
-int		end_game(t_game *game);
-int		destroy_all(int keysym, t_game *game);
-void	init_game(t_game *game);
-void	init_sprites(t_game *game);
-void	update_player_pos(t_game *game, int x, int y);
-void	move_player(t_game *game, int x, int y);
-char	*ft_stradd(char *s1, char *s2);
+void		get_map(t_game *game, char *argv);
+void		check_map(t_game *game);
+int			render_map(t_game *game);
+t_map		cpy_map(t_map map);
+int			handle_input(int keysym, t_game *game);
+int			end_game(t_game *game);
+int			destroy_all(int keysym, t_game *game);
+void		init_game(t_game *game);
+t_sprite	new_sprite(t_game *game, char *path);
+void		init_sprites(t_game *game);
+void		update_player_pos(t_game *game, int x, int y);
+void		move_player(t_game *game, int x, int y);
+char		*ft_stradd(char *s1, char *s2);
 
 #endif
