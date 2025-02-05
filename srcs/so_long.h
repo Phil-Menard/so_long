@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 17:25:00 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/05 22:32:02 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/05 22:52:38 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,6 @@ void		init_sprites(t_game *game);
 void		update_player_pos(t_game *game, int x, int y);
 void		move_player(t_game *game, int x, int y);
 char		*ft_stradd(char *s1, char *s2);
+void		floodfill(int r, int c, t_map *map);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 14:49:58 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/05 22:39:25 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/05 23:09:08 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,7 @@ int	surrounded_by_walls(t_game *game)
 	return (0);
 }
 
-void	floodfill(int r, int c, t_map *map)
-{
-	if ((r < 0 || r >= map->rows || c < 0 || c >= map->columns)
-		|| map->full_map[r][c] == 'v' || map->full_map[r][c] == WALL)
-		return ;
-	map->full_map[r][c] = 'v';
-	floodfill(r, c + 1, map);
-	floodfill(r, c - 1, map);
-	floodfill(r + 1, c, map);
-	floodfill(r - 1, c, map);
-}
-
-int	check_way(t_map *map)
+void	check_way(t_map *map, t_game *game)
 {
 	int	i;
 	int	j;
@@ -66,12 +54,16 @@ int	check_way(t_map *map)
 		{
 			if (map->full_map[i][j] == COIN
 				|| map->full_map[i][j] == EXIT)
-				return (1);
+			{
+				ft_printf("Error\nThe level is impossible to finish!\n");
+				ft_free_2d((void **)map->full_map);
+				ft_free_2d((void **)game->map.full_map);
+				exit(EXIT_FAILURE);
+			}
 			j++;
 		}
 		i++;
 	}
-	return (0);
 }
 
 void	check_nb_player(t_game *game)
@@ -84,8 +76,8 @@ void	check_nb_player(t_game *game)
 	counter = 0;
 	while (game->map.full_map[i])
 	{
-		j = 0;
-		while (j++ < game->map.columns)
+		j = -1;
+		while (++j < game->map.columns)
 		{
 			if (game->map.full_map[i][j] == PLAYER)
 				counter++;
@@ -103,6 +95,31 @@ void	check_nb_player(t_game *game)
 	}
 }
 
+void	check_unknown_tile(t_game *game)
+{
+	int		i;
+	int		j;
+	char	tile;
+
+	i = 0;
+	while (i < game->map.rows)
+	{
+		j = -1;
+		while (++j < game->map.columns)
+		{
+			tile = game->map.full_map[i][j];
+			if (tile != WALL && tile != FLOOR && tile != COIN
+				&& tile != PLAYER && tile != EXIT)
+			{
+				ft_printf("Error\nThe map file isn't correct!\n");
+				ft_free_2d((void **)game->map.full_map);
+				exit(EXIT_FAILURE);
+			}
+		}
+		i++;
+	}
+}
+
 void	check_map(t_game *game)
 {
 	t_map	map_cpy;
@@ -113,6 +130,7 @@ void	check_map(t_game *game)
 		ft_free_2d((void **)game->map.full_map);
 		exit(EXIT_FAILURE);
 	}
+	check_unknown_tile(game);
 	if (surrounded_by_walls(game) == 1)
 	{
 		ft_printf("Error\nThe map is not surrounded by walls!\n");
@@ -122,12 +140,6 @@ void	check_map(t_game *game)
 	check_nb_player(game);
 	map_cpy = cpy_map(game->map);
 	floodfill(map_cpy.x, map_cpy.y, &map_cpy);
-	if (check_way(&map_cpy) == 1)
-	{
-		ft_printf("Error\nThe level is impossible to finish!\n");
-		ft_free_2d((void **)map_cpy.full_map);
-		ft_free_2d((void **)game->map.full_map);
-		exit(EXIT_FAILURE);
-	}
+	check_way(&map_cpy, game);
 	ft_free_2d((void **)map_cpy.full_map);
 }
