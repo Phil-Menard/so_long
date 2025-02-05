@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 17:25:00 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/04 15:23:07 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/05 15:04:38 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ typedef struct s_map
 	char	**full_map;
 	int		rows;
 	int		columns;
+	int		x;
+	int		y;
 }	t_map;
 
 typedef struct s_sprite

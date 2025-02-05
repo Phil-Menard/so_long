@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 18:44:34 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/04 16:03:55 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/05 14:44:06 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,3 @@ int	render_map(t_game *game)
 	}
 	return (0);
 }
-
-/*
-fill all map where :
-	is_floor
-	is_coin
-	is_exit
-	!is_wall
-	!been_visited
-if coins or exit are remaining, then impossible level
-
-*/
