@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 18:44:34 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/05 14:44:06 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/05 17:57:21 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,10 @@ void	fill_map(t_game *game, int y, int x)
 
 int	render_map(t_game *game)
 {
-	int	y;
-	int	x;
+	int		y;
+	int		x;
+	char	*temp;
+	char	*str;
 
 	game->total_coins = 0;
 	game->move_count = 0;
@@ -86,5 +88,11 @@ int	render_map(t_game *game)
 		}
 		y++;
 	}
+	temp = ft_itoa(game->move_count);
+	str = ft_strjoin("movement count : ", temp);
+	free(temp);
+	mlx_string_put(game->mlx, game->window, (game->map.columns * (IMG_WIDTH / 2)
+			- 32), ((game->map.rows + 1) * IMG_HEIGHT) - 32, 0xFFFFFF, str);
+	free(str);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 23:12:12 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/04 14:23:45 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/05 17:54:50 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,30 @@ void	update_player_pos(t_game *game, int x, int y)
 		++game->player.pos_x;
 }
 
+void	update_move_window(t_game *game)
+{
+	char	*str;
+	char	*temp;
+
+	temp = ft_itoa(game->move_count);
+	str = ft_strjoin("movement count : ", temp);
+	free(temp);
+	mlx_string_put(game->mlx, game->window, (game->map.columns * (IMG_WIDTH / 2)
+			- 32), ((game->map.rows + 1) * IMG_HEIGHT) - 32, 0x000000, str);
+	free(str);
+	temp = ft_itoa(++game->move_count);
+	str = ft_strjoin("movement count : ", temp);
+	free(temp);
+	mlx_string_put(game->mlx, game->window, (game->map.columns * (IMG_WIDTH / 2)
+			- 32), ((game->map.rows + 1) * IMG_HEIGHT) - 32, 0xFFFFFF, str);
+	free(str);
+}
+
 void	move_player(t_game *game, int x, int y)
 {
 	if (game->map.full_map[y][x] != EXIT
 		|| (game->map.full_map[y][x] == EXIT && game->total_coins == 0))
-		ft_printf("Mouvements : %d\n", ++game->move_count);
+		update_move_window(game);
 	if (game->map.full_map[y][x] != EXIT)
 	{
 		mlx_put_image_to_window(game->mlx, game->window, game->floor.img,

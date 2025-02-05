@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 23:52:42 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/04 13:56:00 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/05 16:25:30 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	init_game(t_game *game)
 	if (game->mlx == NULL)
 		exit(EXIT_FAILURE);
 	game->window = mlx_new_window(game->mlx, game->map.columns * IMG_WIDTH,
-			game->map.rows * IMG_HEIGHT, "so_long");
+			(game->map.rows + 1) * IMG_HEIGHT, "so_long");
 	if (game->window == NULL)
 	{
 		free(game->window);
