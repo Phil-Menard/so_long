@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 17:25:00 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/06 15:39:45 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/06 19:09:08 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_sprite
 	int		pos_x;
 	int		pos_y;
 	int		is_going_up;
+	int		game_over;
 }	t_sprite;
 
 typedef struct s_game

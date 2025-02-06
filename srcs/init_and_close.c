@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 23:52:42 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/06 15:40:47 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/06 19:08:31 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,5 @@ void	init_sprites(t_game *game)
 	game->exit = new_sprite(game, EXIT_PATH);
 	game->ennemy = new_sprite(game, ENNEMY_PATH);
 	game->ennemy.is_going_up = -1;
+	game->player.game_over = 0;
 }
