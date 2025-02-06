@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 14:49:58 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/06 13:50:36 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/06 21:24:06 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,4 +142,5 @@ void	check_map(t_game *game)
 	floodfill(map_cpy.x, map_cpy.y, &map_cpy);
 	check_way(&map_cpy, game);
 	ft_free_2d((void **)map_cpy.full_map);
+	count_ennemies(game);
 }

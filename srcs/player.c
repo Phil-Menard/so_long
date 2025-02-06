@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 23:12:12 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/06 19:13:20 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/06 21:17:23 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	handle_input(int keysym, t_game *game)
 			&& game->map.full_map[y][x + 1] != WALL)
 			move_player(game, game->player.pos_x + 1, game->player.pos_y);
 		if (game->ennemy.is_going_up != -1)
-			move_ennemy(game);
+			move_ennemy(game, game->ennemy.pos_x, game->ennemy.pos_y);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:02:26 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/06 19:13:10 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/06 21:24:52 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	move_ennemy_down(t_game *game, int x, int y)
 		game->ennemy.is_going_up = 1;
 }
 
-int	move_ennemy_y_axis(t_game *game, int x, int y)
+int	move_ennemy(t_game *game, int y, int x)
 {
 	if (game->ennemy.is_going_up == 1)
 	{
@@ -85,12 +85,31 @@ int	move_ennemy_y_axis(t_game *game, int x, int y)
 	return (y);
 }
 
-void	move_ennemy(t_game *game)
+void	count_ennemies(t_game *game)
 {
-	int	x;
-	int	y;
+	int	i;
+	int	j;
+	int	count;
 
-	x = game->ennemy.pos_x;
-	y = game->ennemy.pos_y;
-	move_ennemy_y_axis(game, y, x);
+	i = 0;
+	count = 0;
+	while (i < game->map.rows)
+	{
+		j = 0;
+		while (j < game->map.columns)
+		{
+			if (game->map.full_map[i][j] == ENNEMY)
+			{
+				count++;
+			}
+			j++;
+		}
+		i++;
+	}
+	if (count > 1)
+	{
+		ft_printf("Error\nToo much ennemies on the map!\n");
+		ft_free_2d((void **)game->map.full_map);
+		exit(EXIT_FAILURE);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 17:25:00 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/06 19:09:08 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/06 21:24:12 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ t_sprite	new_sprite(t_game *game, char *path);
 void		init_sprites(t_game *game);
 void		change_sprites(t_game *game, t_sprite *sprite, t_sprite *character);
 void		update_player_pos(t_game *game, int x, int y);
-void		move_ennemy(t_game *game);
+void		count_ennemies(t_game *game);
+int			move_ennemy(t_game *game, int x, int y);
 void		move_player(t_game *game, int x, int y);
 char		*ft_stradd(char *s1, char *s2);
 void		floodfill(int r, int c, t_map *map);
