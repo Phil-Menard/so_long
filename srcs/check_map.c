@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 14:49:58 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/05 23:09:08 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/06 13:50:36 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	check_unknown_tile(t_game *game)
 		{
 			tile = game->map.full_map[i][j];
 			if (tile != WALL && tile != FLOOR && tile != COIN
-				&& tile != PLAYER && tile != EXIT)
+				&& tile != PLAYER && tile != EXIT && tile != ENNEMY)
 			{
 				ft_printf("Error\nThe map file isn't correct!\n");
 				ft_free_2d((void **)game->map.full_map);

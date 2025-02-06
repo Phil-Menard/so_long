@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 18:44:34 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/05 22:31:49 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/06 15:39:40 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,23 @@ void	get_map(t_game *game, char *argv)
 	check_map(game);
 }
 
+void	set_player_pos(t_game *game, int x, int y)
+{
+	mlx_put_image_to_window(game->mlx, game->window, game->player.img,
+		IMG_HEIGHT * x, IMG_WIDTH * y);
+	game->player.pos_x = x;
+	game->player.pos_y = y;
+}
+
+void	set_ennemy_pos(t_game *game, int x, int y)
+{
+	mlx_put_image_to_window(game->mlx, game->window, game->ennemy.img,
+		IMG_HEIGHT * x, IMG_WIDTH * y);
+	game->ennemy.pos_x = x;
+	game->ennemy.pos_y = y;
+	game->ennemy.is_going_up = 1;
+}
+
 void	fill_map(t_game *game, int y, int x)
 {
 	char	pos;
@@ -57,12 +74,9 @@ void	fill_map(t_game *game, int y, int x)
 		++game->total_coins;
 	}
 	else if (pos == PLAYER)
-	{
-		mlx_put_image_to_window(game->mlx, game->window, game->player.img,
-			IMG_HEIGHT * x, IMG_WIDTH * y);
-		game->player.pos_x = x;
-		game->player.pos_y = y;
-	}
+		set_player_pos(game, x, y);
+	else if (pos == ENNEMY)
+		set_ennemy_pos(game, x, y);
 	else if (pos == EXIT)
 		mlx_put_image_to_window(game->mlx, game->window, game->exit.img,
 			IMG_HEIGHT * x, IMG_WIDTH * y);
@@ -95,33 +109,4 @@ int	render_map(t_game *game)
 			- 32), ((game->map.rows + 1) * IMG_HEIGHT) - 32, 0xFFFFFF, str);
 	free(str);
 	return (0);
-}
-
-t_map	cpy_map(t_map map)
-{
-	t_map	res;
-	int		i;
-	int		j;
-
-	res.full_map = malloc((map.rows + 1) * sizeof (char *));
-	i = 0;
-	while (i < map.rows)
-	{
-		res.full_map[i] = ft_strdup(map.full_map[i]);
-		j = 0;
-		while (j < map.columns)
-		{
-			if (map.full_map[i][j] == PLAYER)
-			{
-				res.x = i;
-				res.y = j;
-			}
-			j++;
-		}
-		i++;
-	}
-	res.full_map[i] = NULL;
-	res.columns = map.columns;
-	res.rows = map.rows;
-	return (res);
 }

@@ -14,7 +14,8 @@ SRC = so_long.c \
 	map.c \
 	player.c \
 	init_and_close.c \
-	check_map.c
+	check_map.c \
+	ennemy.c
 
 # Ajout des préfixes de dossiers
 SRC := $(addprefix $(SRC_DIR)/, $(SRC))

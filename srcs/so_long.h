@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 17:25:00 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/05 22:52:38 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/06 15:39:45 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@
 # define KEY_A				97
 # define KEY_S				115
 # define KEY_D				100
-# define KEY_UP 			65362
-# define KEY_LEFT 			65361
-# define KEY_RIGHT 			65363
-# define KEY_DOWN 			65364
-# define KEY_ESC 			65307
+# define KEY_UP				65362
+# define KEY_LEFT			65361
+# define KEY_RIGHT			65363
+# define KEY_DOWN			65364
+# define KEY_ESC			65307
 
 # define WALL_PATH			"./assets/sprites/wall.xpm"
 # define FLOOR_PATH			"./assets/sprites/floor.xpm"
@@ -37,12 +37,14 @@
 # define PLAYER_PATH		"./assets/sprites/player.xpm"
 # define EXIT_PATH			"./assets/sprites/exit.xpm"
 # define EXIT_OPEN_PATH		"./assets/sprites/exit_open.xpm"
+# define ENNEMY_PATH		"./assets/sprites/ennemy.xpm"
 
 # define WALL				'1'
-# define FLOOR 				'0'
-# define COIN 				'C'
+# define FLOOR				'0'
+# define COIN				'C'
 # define PLAYER				'P'
-# define EXIT 		 		'E'
+# define EXIT				'E'
+# define ENNEMY				'X'
 
 typedef struct s_map
 {
@@ -59,6 +61,7 @@ typedef struct s_sprite
 	char	*path;
 	int		pos_x;
 	int		pos_y;
+	int		is_going_up;
 }	t_sprite;
 
 typedef struct s_game
@@ -73,6 +76,7 @@ typedef struct s_game
 	t_sprite	coin;
 	t_sprite	exit;
 	t_sprite	exit_open;
+	t_sprite	ennemy;
 	t_map		map;
 }	t_game;
 
@@ -86,9 +90,13 @@ int			destroy_all(int keysym, t_game *game);
 void		init_game(t_game *game);
 t_sprite	new_sprite(t_game *game, char *path);
 void		init_sprites(t_game *game);
+void		change_sprites(t_game *game, t_sprite *sprite, t_sprite *character);
 void		update_player_pos(t_game *game, int x, int y);
+void		move_ennemy(t_game *game);
 void		move_player(t_game *game, int x, int y);
 char		*ft_stradd(char *s1, char *s2);
 void		floodfill(int r, int c, t_map *map);
+void		coins_counter(t_game *game);
+void		update_move_counter(t_game *game);
 
 #endif

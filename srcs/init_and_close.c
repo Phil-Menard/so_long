@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 23:52:42 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/05 23:10:36 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/06 15:40:47 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	end_game(t_game *game)
 		mlx_destroy_image(game->mlx, game->exit.img);
 	if (game->exit_open.img)
 		mlx_destroy_image(game->mlx, game->exit_open.img);
+	if (game->ennemy.img)
+		mlx_destroy_image(game->mlx, game->ennemy.img);
 	mlx_destroy_display(game->mlx);
 	free(game->mlx);
 	if (game->map.full_map)
@@ -80,9 +82,12 @@ void	init_sprites(t_game *game)
 	game->player.img = NULL;
 	game->exit.img = NULL;
 	game->exit_open.img = NULL;
+	game->ennemy.img = NULL;
 	game->wall = new_sprite(game, WALL_PATH);
 	game->floor = new_sprite(game, FLOOR_PATH);
 	game->coin = new_sprite(game, COIN_PATH);
 	game->player = new_sprite(game, PLAYER_PATH);
 	game->exit = new_sprite(game, EXIT_PATH);
+	game->ennemy = new_sprite(game, ENNEMY_PATH);
+	game->ennemy.is_going_up = -1;
 }
