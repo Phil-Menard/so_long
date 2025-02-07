@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 17:25:00 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/07 12:00:55 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/07 17:41:48 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_sprite
 	int		pos_x;
 	int		pos_y;
 	int		is_going_up;
+	int		is_going_down;
 	int		is_on_coin;
 	int		game_over;
 }	t_sprite;
@@ -82,12 +83,17 @@ typedef struct s_game
 	t_map		map;
 }	t_game;
 
-void		get_map(t_game *game, char *argv);
 void		check_map(t_game *game);
+void		check_exit(t_game *game);
 int			render_map(t_game *game);
+void		get_map(t_game *game, char *argv);
+void		check_exit(t_game *game);
 t_map		cpy_map(t_map map);
 int			handle_input(int keysym, t_game *game);
 int			end_game(t_game *game);
+void		game_over(t_game *game);
+void		check_way(t_map *map, t_game *game);
+void		check_way_coin(t_map *map, t_game *game);
 int			destroy_all(int keysym, t_game *game);
 void		init_game(t_game *game);
 t_sprite	new_sprite(t_game *game, char *path);
@@ -98,7 +104,7 @@ void		count_ennemies(t_game *game);
 int			move_ennemy(t_game *game, int x, int y);
 void		move_player(t_game *game, int x, int y);
 char		*ft_stradd(char *s1, char *s2);
-void		floodfill(int r, int c, t_map *map);
+void		floodfill(int r, int c, t_map *map, int x);
 void		coins_counter(t_game *game);
 void		update_move_counter(t_game *game);
 

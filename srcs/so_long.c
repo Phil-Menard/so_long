@@ -6,11 +6,21 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 15:15:27 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/04 15:26:23 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/07 17:37:04 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void	game_over(t_game *game)
+{
+	ft_printf("Game over !\n");
+	mlx_clear_window(game->mlx, game->window);
+	mlx_string_put(game->mlx, game->window, (game->map.columns
+			* (IMG_WIDTH / 2) - 32), ((game->map.rows)
+			* ((IMG_HEIGHT / 2) + 12)) - 32, 0xFFFFFF, "GAME OVER LOOSER!");
+	game->player.game_over = 1;
+}
 
 int	main(int argc, char **argv)
 {

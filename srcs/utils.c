@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 17:52:06 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/06 17:32:33 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/07 17:39:24 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,18 @@ char	*ft_stradd(char *s1, char *s2)
 	}
 }
 
-void	floodfill(int r, int c, t_map *map)
+void	floodfill(int r, int c, t_map *map, int x)
 {
 	if ((r < 0 || r >= map->rows || c < 0 || c >= map->columns)
 		|| map->full_map[r][c] == 'v' || map->full_map[r][c] == WALL)
 		return ;
+	if (x == 1 && map->full_map[r][c] == EXIT)
+		return ;
 	map->full_map[r][c] = 'v';
-	floodfill(r, c + 1, map);
-	floodfill(r, c - 1, map);
-	floodfill(r + 1, c, map);
-	floodfill(r - 1, c, map);
+	floodfill(r, c + 1, map, x);
+	floodfill(r, c - 1, map, x);
+	floodfill(r + 1, c, map, x);
+	floodfill(r - 1, c, map, x);
 }
 
 void	coins_counter(t_game *game)

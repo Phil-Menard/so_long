@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 14:49:58 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/06 21:24:06 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/07 17:43:07 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,31 +39,6 @@ int	surrounded_by_walls(t_game *game)
 		y++;
 	}
 	return (0);
-}
-
-void	check_way(t_map *map, t_game *game)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (map->full_map[i])
-	{
-		j = 0;
-		while (j < map->columns)
-		{
-			if (map->full_map[i][j] == COIN
-				|| map->full_map[i][j] == EXIT)
-			{
-				ft_printf("Error\nThe level is impossible to finish!\n");
-				ft_free_2d((void **)map->full_map);
-				ft_free_2d((void **)game->map.full_map);
-				exit(EXIT_FAILURE);
-			}
-			j++;
-		}
-		i++;
-	}
 }
 
 void	check_nb_player(t_game *game)
@@ -138,9 +113,13 @@ void	check_map(t_game *game)
 		exit(EXIT_FAILURE);
 	}
 	check_nb_player(game);
+	check_exit(game);
 	map_cpy = cpy_map(game->map);
-	floodfill(map_cpy.x, map_cpy.y, &map_cpy);
+	floodfill(map_cpy.x, map_cpy.y, &map_cpy, 0);
 	check_way(&map_cpy, game);
 	ft_free_2d((void **)map_cpy.full_map);
-	count_ennemies(game);
+	map_cpy = cpy_map(game->map);
+	floodfill(map_cpy.x, map_cpy.y, &map_cpy, 1);
+	check_way_coin(&map_cpy, game);
+	ft_free_2d((void **)map_cpy.full_map);
 }

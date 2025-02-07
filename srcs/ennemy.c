@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:02:26 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/07 13:48:08 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/07 17:52:53 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,13 @@
 void	swap_tiles(t_game *game, int x, int y, int z)
 {
 	if (game->map.full_map[z][y] == PLAYER)
-	{
-		ft_printf("Game over !\n");
-		mlx_clear_window(game->mlx, game->window);
-		mlx_string_put(game->mlx, game->window, (game->map.columns
-				* (IMG_WIDTH / 2) - 32), ((game->map.rows)
-				* ((IMG_HEIGHT / 2) + 12)) - 32, 0xFFFFFF, "GAME OVER LOOSER!");
-		game->player.game_over = 1;
-	}
+		game_over(game);
+	else if (game->map.full_map[x][y] == PLAYER && game->ennemy.is_going_up == 1
+		&& game->player.is_going_down == 1)
+		game_over(game);
+	else if (game->map.full_map[x][y] == PLAYER && game->ennemy.is_going_up == 0
+		&& game->player.is_going_up == 1)
+		game_over(game);
 	else
 	{
 		if (game->ennemy.is_on_coin == 1)
@@ -54,7 +53,8 @@ void	move_ennemy_up(t_game *game, int x, int y)
 		}
 		else
 		{
-			change_sprites(game, &(game->floor), &(game->ennemy));
+			if (game->map.full_map[x][y] != PLAYER)
+				change_sprites(game, &(game->floor), &(game->ennemy));
 			--game->ennemy.pos_y;
 			swap_tiles(game, x, y, x - 1);
 		}
@@ -80,7 +80,8 @@ void	move_ennemy_down(t_game *game, int x, int y)
 		}
 		else
 		{
-			change_sprites(game, &(game->floor), &(game->ennemy));
+			if (game->map.full_map[x][y] != PLAYER)
+				change_sprites(game, &(game->floor), &(game->ennemy));
 			++game->ennemy.pos_y;
 			swap_tiles(game, x, y, x + 1);
 		}
@@ -108,7 +109,7 @@ int	move_ennemy(t_game *game, int y, int x)
 	{
 		if (game->map.full_map[x + 1][y] != EXIT
 			&& game->map.full_map[x + 1][y] != WALL)
-				move_ennemy_down(game, x, y);
+			move_ennemy_down(game, x, y);
 		else
 		{
 			game->ennemy.is_going_up = 1;
