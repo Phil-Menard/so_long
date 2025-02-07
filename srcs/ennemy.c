@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:02:26 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/06 21:24:52 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/07 13:48:08 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 void	swap_tiles(t_game *game, int x, int y, int z)
 {
-	if (game->map.full_map[z][y] == PLAYER
-		|| game->map.full_map[x][y] == PLAYER)
+	if (game->map.full_map[z][y] == PLAYER)
 	{
 		ft_printf("Game over !\n");
 		mlx_clear_window(game->mlx, game->window);
@@ -26,20 +25,41 @@ void	swap_tiles(t_game *game, int x, int y, int z)
 	}
 	else
 	{
+		if (game->ennemy.is_on_coin == 1)
+		{
+			game->map.full_map[x][y] = COIN;
+			game->map.full_map[z][y] = ENNEMY;
+		}
+		if (game->ennemy.is_on_coin == 0 && game->map.full_map[z][y] != COIN)
+		{
+			game->map.full_map[x][y] = FLOOR;
+			game->map.full_map[z][y] = ENNEMY;
+		}
 		change_sprites(game, &(game->ennemy), &(game->ennemy));
-		game->map.full_map[x][y] = FLOOR;
-		game->map.full_map[z][y] = ENNEMY;
 	}
 }
 
 void	move_ennemy_up(t_game *game, int x, int y)
 {
-	if (game->map.full_map[x - 1][y] == FLOOR
-		|| game->map.full_map[x - 1][y] == PLAYER)
+	if (game->map.full_map[x - 1][y] != EXIT
+			&& game->map.full_map[x - 1][y] != WALL)
 	{
-		change_sprites(game, &(game->floor), &(game->ennemy));
-		--game->ennemy.pos_y;
-		swap_tiles(game, x, y, x - 1);
+		if (game->ennemy.is_on_coin == 1)
+		{
+			if (game->map.full_map[x][y] != PLAYER)
+				change_sprites(game, &(game->coin), &(game->ennemy));
+			--game->ennemy.pos_y;
+			swap_tiles(game, x, y, x - 1);
+			game->ennemy.is_on_coin = 0;
+		}
+		else
+		{
+			change_sprites(game, &(game->floor), &(game->ennemy));
+			--game->ennemy.pos_y;
+			swap_tiles(game, x, y, x - 1);
+		}
+		if (game->map.full_map[x - 1][y] == COIN)
+			game->ennemy.is_on_coin = 1;
 	}
 	else
 		game->ennemy.is_going_up = 0;
@@ -47,12 +67,25 @@ void	move_ennemy_up(t_game *game, int x, int y)
 
 void	move_ennemy_down(t_game *game, int x, int y)
 {
-	if (game->map.full_map[x + 1][y] == FLOOR
-		|| game->map.full_map[x + 1][y] == PLAYER)
+	if (game->map.full_map[x + 1][y] != EXIT
+			&& game->map.full_map[x + 1][y] != WALL)
 	{
-		change_sprites(game, &(game->floor), &(game->ennemy));
-		++game->ennemy.pos_y;
-		swap_tiles(game, x, y, x + 1);
+		if (game->ennemy.is_on_coin == 1)
+		{
+			if (game->map.full_map[x][y] != PLAYER)
+				change_sprites(game, &(game->coin), &(game->ennemy));
+			++game->ennemy.pos_y;
+			swap_tiles(game, x, y, x + 1);
+			game->ennemy.is_on_coin = 0;
+		}
+		else
+		{
+			change_sprites(game, &(game->floor), &(game->ennemy));
+			++game->ennemy.pos_y;
+			swap_tiles(game, x, y, x + 1);
+		}
+		if (game->map.full_map[x + 1][y] == COIN)
+			game->ennemy.is_on_coin = 1;
 	}
 	else
 		game->ennemy.is_going_up = 1;
@@ -62,8 +95,8 @@ int	move_ennemy(t_game *game, int y, int x)
 {
 	if (game->ennemy.is_going_up == 1)
 	{
-		if (game->map.full_map[x - 1][y] == FLOOR
-			|| game->map.full_map[x - 1][y] == PLAYER)
+		if (game->map.full_map[x - 1][y] != EXIT
+			&& game->map.full_map[x - 1][y] != WALL)
 			move_ennemy_up(game, x, y);
 		else
 		{
@@ -73,9 +106,9 @@ int	move_ennemy(t_game *game, int y, int x)
 	}
 	else
 	{
-		if (game->map.full_map[x + 1][y] == FLOOR
-			|| game->map.full_map[x + 1][y] == PLAYER)
-			move_ennemy_down(game, x, y);
+		if (game->map.full_map[x + 1][y] != EXIT
+			&& game->map.full_map[x + 1][y] != WALL)
+				move_ennemy_down(game, x, y);
 		else
 		{
 			game->ennemy.is_going_up = 1;
