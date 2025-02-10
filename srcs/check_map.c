@@ -6,7 +6,7 @@
 /*   By: pmenard <pmenard@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 14:49:58 by pmenard           #+#    #+#             */
-/*   Updated: 2025/02/07 17:43:07 by pmenard          ###   ########.fr       */
+/*   Updated: 2025/02/10 11:58:36 by pmenard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,16 +95,38 @@ void	check_unknown_tile(t_game *game)
 	}
 }
 
+void	check_lines(t_game *game)
+{
+	int	i;
+	int	j;
+	int	count;
+	int	temp;
+
+	i = 0;
+	count = game->map.columns - 1;
+	while (i < game->map.rows)
+	{
+		temp = 0;
+		j = -1;
+		while (++j < game->map.columns)
+		{
+			temp++;
+		}
+		if (temp != count)
+		{
+			ft_printf("Error\nThis map is not rectangular!\n");
+			ft_free_2d((void **)game->map.full_map);
+			exit(EXIT_FAILURE);
+		}
+		i++;
+	}
+}
+
 void	check_map(t_game *game)
 {
 	t_map	map_cpy;
 
-	if (game->map.columns == game->map.rows)
-	{
-		ft_printf("Error\nThis map is not rectangular!\n");
-		ft_free_2d((void **)game->map.full_map);
-		exit(EXIT_FAILURE);
-	}
+	check_lines(game);
 	check_unknown_tile(game);
 	if (surrounded_by_walls(game) == 1)
 	{
